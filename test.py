@@ -6,6 +6,7 @@ def enter_path():
     while (True):
         #path_dir = '/home/declo/Downloads/Test_SibEDGE/test/'
         if os.path.isdir(path_dir) == False:
+            print ('If you use version python3, please do not use quotes, and use it fot v2.')
             path_dir = input ('Please enter rigth path of directory: ')
         else:
             return path_dir
@@ -36,6 +37,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 files_info = {}
 name = path_dir[1:].replace('/','_')
 name_file = os.path.join(script_dir,name+'.txt')
+
 if os.path.exists(name_file):
     file_res = open (name_file, 'r')
     files_info = save_data_from_file (file_res)
@@ -49,10 +51,9 @@ if os.path.exists(name_file):
 
     for name,value in files_info.items():
         if value == 'n':
-            print (name,'\tNew file')
+            print ('{0:25} ==> {1:25}'.format(name, 'New file'))
         elif value == 'o':
-            print (name, '\tFile deleted')
-
+            print ('{0:25} ==> {1:25}'.format(name, 'File deleted'))
 else:
     file_res = open (name_file, 'w')
     work_with_files (path_dir,files_info)
