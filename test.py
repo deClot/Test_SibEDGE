@@ -11,23 +11,50 @@ def enter_path():
         else:
             return path_dir
 
-def work_with_files (path_dir):
+def work_with_files (path_dir,files_info):
     to_write = ''
-    files = os.listdir(path_dir)
-    for name in files:
+    names = []
+    for name in os.listdir(path_dir):
         fullname = os.path.join(path_dir, name)
         if os.path.isfile(fullname):
+            names.append(name)
             to_write = to_write + '"' + name + '",'
     file_res.write ('[%s]' % (to_write[:len(to_write)-1]))
+    return names
 
+def save_data_from_file (file_res):
+    line = file_res.readline()
+    file_res.seek (0,0)
+
+    line = line.replace('[','').replace(']','').replace('"','').split(',')
+
+    files_info = {}
+    for name in line:
+        files_info[name] = files_info.get(name,'old')
+    return files_info
         
 path_dir = enter_path ()
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
+files_info = {}
 name_file = os.path.join(script_dir,'result.txt')
-#if os.path.exists(name_file):
+if os.path.exists(name_file):
+    file_res = open (name_file, 'r+')
+    files_info = save_data_from_file (file_res)
+    print (files_info)
     
-file_res = open (name_file, 'w')     
+    names = work_with_files (path_dir,files_info)
+    print (names)
+
+    
+    
+
+else:
+    file_res = open (name_file, 'w')
+    work_with_files (path_dir,files_info)
+
+
+
 
 
 file_res.close()
