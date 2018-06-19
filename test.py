@@ -1,13 +1,12 @@
 import os
 
 def enter_path():
-    #path_dir = input ('Enter path of directory: ')
+    path_dir = input ('Enter path of directory: ')
 
     while (True):
-        path_dir = '/home/declo/Downloads/Test_SibEDGE/test/'
+        #path_dir = '/home/declo/Downloads/Test_SibEDGE/test/'
         if os.path.isdir(path_dir) == False:
-            #path_dir = input ('Please enter rigth path of directory: ')
-            print ('Wrong')
+            path_dir = input ('Please enter rigth path of directory: ')
         else:
             return path_dir
 
@@ -35,7 +34,8 @@ path_dir = enter_path ()
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 files_info = {}
-name_file = os.path.join(script_dir,'result.txt')
+name = path_dir[1:].replace('/','_')
+name_file = os.path.join(script_dir,name+'.txt')
 if os.path.exists(name_file):
     file_res = open (name_file, 'r')
     files_info = save_data_from_file (file_res)
