@@ -2,7 +2,7 @@ import os
 import json
 
 def enter_path():
-    path_dir = eval(raw_input('Enter path of directory: '))
+    path_dir = input('Enter path of directory: ')
 
     while (True):
         #path_dir = '/home/declo/Downloads/Test_SibEDGE/test/'
