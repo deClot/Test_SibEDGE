@@ -1,7 +1,8 @@
 import os
+import json
 
 def enter_path():
-    path_dir = input ('Enter path of directory: ')
+    path_dir = input('Enter path of directory: ')
 
     while (True):
         #path_dir = '/home/declo/Downloads/Test_SibEDGE/test/'
@@ -12,19 +13,16 @@ def enter_path():
             return path_dir
 
 def work_with_files (path_dir,files_info):
-    to_write = ''
     names = []
     for name in os.listdir(path_dir):
         fullname = os.path.join(path_dir, name)
         if os.path.isfile(fullname):
             names.append(name)
-            to_write = to_write + '"' + name + '",'
-    file_res.write ('[%s]' % (to_write[:len(to_write)-1]))
+    json.dump(names,file_res)
     return names
 
 def save_data_from_file (file_res):
-    line = file_res.readline()
-    line = line.replace('[','').replace(']','').replace('"','').split(',')
+    line = json.load(file_res)
 
     files_info = {}
     for name in line:
@@ -36,7 +34,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 files_info = {}
 name = path_dir[1:].replace('/','_')
-name_file = os.path.join(script_dir,name+'.txt')
+name_file = os.path.join(script_dir,name+'.json')
 
 if os.path.exists(name_file):
     file_res = open (name_file, 'r')
